@@ -50,7 +50,7 @@ static int sfs_mknod(struct inode *dir, struct dentry *dentry,
 		d_instantiate(dentry, inode);
 		dget(dentry);   /* Extra count - pin the dentry in core */
 		error = 0;
-		dir->i_mtime = dir->i_ctime = current_time();
+		dir->i_mtime = dir->i_ctime = current_time(inode);
 
 		/* real filesystems would normally use i_size_write function */
 		dir->i_size += 0x20;  /* bogus small size for each dir entry */
@@ -93,7 +93,7 @@ static int sfs_symlink(struct inode * dir, struct dentry *dentry,
 				inode->i_gid = dir->i_gid;
 			d_instantiate(dentry, inode);
 			dget(dentry);
-			dir->i_mtime = dir->i_ctime = current_time();
+			dir->i_mtime = dir->i_ctime = current_time(inode);
 		} else
 			iput(inode);
 	}
